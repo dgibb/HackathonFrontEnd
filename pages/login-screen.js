@@ -3,8 +3,34 @@ import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function LoginScreen({ navigation }) {
+  const login = function(email, password) {
+    fetch('http://137.184.103.104:8000/auth/account/login', {
+      body: `email_address=${email}&password=${password}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST"
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if(data.token !== ""){
+        window.localStorage.setItem('token', data.token.toString());
+        navigation.navigate('Home')
+      }
+      else{
+        console.log("login failure")
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
@@ -44,6 +70,12 @@ function login(email, password) {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
+    if(data.token !== ""){
+      window.localStorage.setItem('token', data.token.toString());
+    }
+    else{
+      console.log("token is empty")
+    }
     navigation.navigate('Home')
   })
   .catch((error) => {

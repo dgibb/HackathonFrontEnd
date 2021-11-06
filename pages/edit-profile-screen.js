@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Image} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const DATA = [
   {
@@ -36,20 +38,16 @@ const Item = ({ title }) => (
   </View>
 );
 
-function EditProfileScreen() {
+function EditProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ data: {} });
 
     //get token from loacalstorage
-    const token = JSON.parse(localStorage.getItem("token:"));
+    const token = window.localStorage.getItem("token");
+    console.log(token);
 
     useEffect(() => {
-      fetch('http://137.184.103.104:8000/profile/details', {
-        body: `token_user=${token}`,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        method: "GET"
-      })
+      fetch(`http://137.184.103.104:8000/auth/profile/details?token_user=${token}`
+      )
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
@@ -86,6 +84,7 @@ function EditProfileScreen() {
 
    <SafeAreaView style={styles.container}>
       <FlatList
+        style={styles.item}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
@@ -106,6 +105,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  item: {
+    flex: 1,
+    textAlign: "center",
+    marginLeft: 50,
+    marginRight: 50,
+    width: 50,
+  }
 });
 
 export default EditProfileScreen;
