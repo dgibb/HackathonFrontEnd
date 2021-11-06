@@ -38,7 +38,7 @@ const Item = ({ title }) => (
   </View>
 );
 
-function EditProfileScreen() {
+function EditProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ data: {} });
 
     //get token from loacalstorage
