@@ -48,11 +48,11 @@ function register(email, password) {
     console.log('Success:', data);
     if(data.token !== ""){
       window.localStorage.setItem('token', data.token.toString());
+      navigation.navigate('EditProfile');
     }
     else{
       console.log("token is empty")
     }
-    navigation.navigate('EditProfile');
   })
   .catch((error) => {
     console.error('Error:', error);

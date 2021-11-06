@@ -72,11 +72,12 @@ function login(email, password) {
     console.log('Success:', data);
     if(data.token !== ""){
       window.localStorage.setItem('token', data.token.toString());
+      navigation.navigate('Home');
     }
     else{
       console.log("token is empty")
     }
-    navigation.navigate('Home')
+
   })
   .catch((error) => {
     console.error('Error:', error);
