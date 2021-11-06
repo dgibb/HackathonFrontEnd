@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function LoginScreen({ navigation }) {
+
   const login = function(email, password) {
     fetch('http://137.184.103.104:8000/auth/account/login', {
       body: `email_address=${email}&password=${password}`,
@@ -58,31 +59,6 @@ function LoginScreen({ navigation }) {
   );
 }
 
-function login(email, password) {
-
-  fetch('http://137.184.103.104:8000/auth/account/login', {
-    body: `email_address=${email}&password=${password}`,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    method: "POST"
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    if(data.token !== ""){
-      window.localStorage.setItem('token', data.token.toString());
-      navigation.navigate('Home');
-    }
-    else{
-      console.log("token is empty")
-    }
-
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-}
 
 const styles = StyleSheet.create({
   body: {
