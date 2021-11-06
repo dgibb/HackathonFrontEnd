@@ -42,7 +42,8 @@ function EditProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ data: {} });
 
     //get token from loacalstorage
-    const token = JSON.parse(window.localStorage.getItem("token"));
+    const token = window.localStorage.getItem("token");
+    console.log(token);
 
     useEffect(() => {
       fetch(`http://137.184.103.104:8000/auth/profile/details?token_user=${token}`
@@ -83,6 +84,7 @@ function EditProfileScreen({ navigation }) {
 
    <SafeAreaView style={styles.container}>
       <FlatList
+        style={styles.item}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
@@ -103,6 +105,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  item: {
+    flex: 1,
+    textAlign: "center",
+    marginLeft: 50,
+    marginRight: 50,
+    width: 50,
+  }
 });
 
 export default EditProfileScreen;
