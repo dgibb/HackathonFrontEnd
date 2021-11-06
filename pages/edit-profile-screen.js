@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Image} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const DATA = [
   {
@@ -40,16 +42,11 @@ function EditProfileScreen() {
   const [profile, setProfile] = useState({ data: {} });
 
     //get token from loacalstorage
-    const token = JSON.parse(localStorage.getItem("token:"));
+    const token = JSON.parse(window.localStorage.getItem("token"));
 
     useEffect(() => {
-      fetch('http://137.184.103.104:8000/profile/details', {
-        body: `token_user=${token}`,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        method: "GET"
-      })
+      fetch(`http://137.184.103.104:8000/auth/profile/details?token_user=${token}`
+      )
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
