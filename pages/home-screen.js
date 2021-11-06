@@ -52,6 +52,17 @@ const renderItem = ({ item }) => (
 );
 
   return (
+    <View >
+      
+      <View style={styles.myProfButtonContainer}>
+        <Button 
+        title = "My Profile" 
+        style={styles.myProfButton}  
+        onPress={() => navigation.navigate('Profile')} />       
+      </View>
+      
+      <Text>Home Screen</Text>
+
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <View>
         <Text>
@@ -100,6 +111,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  myProfButtonContainer: {
+    flexDirection: 'row-reverse',
+  },
+
+  myProfButton: {
+    backgroundColor: '#7fffd4',
+    width: 20
+  }
   image: {
     height:10,
     width: 10,

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, TextInput, Button} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -40,10 +40,10 @@ const Item = ({ title }) => (
 
 function EditProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ data: {} });
+  const [username, setUsername] = useState("");
 
     //get token from loacalstorage
     const token = window.localStorage.getItem("token");
-    console.log(token);
 
     useEffect(() => {
       fetch(`http://137.184.103.104:8000/auth/profile/details?token_user=${token}`
@@ -62,6 +62,11 @@ function EditProfileScreen({ navigation }) {
     <Item title={item.title} />
   );
 
+  
+  function changeUsername(){
+    <TextInput placeholder="enter username" onChangeText={(name) => setUsername(name)}></TextInput>
+  }
+
   return (
     <View>
       <Image
@@ -71,9 +76,9 @@ function EditProfileScreen({ navigation }) {
         }}
       />
    <View>
-     <Text>
-       Name
-     </Text>
+     <Text>{username}</Text>
+
+     <Button title="edit" onPress={changeUsername}/>
    </View>
 
    <View>

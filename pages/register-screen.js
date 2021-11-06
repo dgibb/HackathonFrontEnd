@@ -9,6 +9,32 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  function register(email, password) {
+
+    fetch('http://137.184.103.104:8000/auth/account/create', {
+      body: `email_address=${email}&password=${password}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST"
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      if(data.token !== ""){
+        window.localStorage.setItem('token', data.token.toString());
+      }
+      else{
+        console.log("token is empty")
+      }
+      navigation.navigate('EditProfile');
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
   return (
     <View style={styles.body}>
       <TextInput
@@ -19,6 +45,7 @@ function RegisterScreen({ navigation }) {
       />
 
       <TextInput
+          secureTextEntry={true}
           style={{height: 40}}
           placeholder="Password"
           onChangeText={password => setPassword(password)}

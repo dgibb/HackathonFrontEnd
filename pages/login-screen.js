@@ -21,6 +21,7 @@ function LoginScreen({ navigation }) {
       if(data.token !== ""){
         window.localStorage.setItem('token', data.token.toString());
         navigation.navigate('Home')
+        window.localStorage.setItem('email', data.email.toString());
       }
       else{
         console.log("login failure")
@@ -42,7 +43,8 @@ function LoginScreen({ navigation }) {
         defaultValue={email}
       />
 
-      <TextInput
+      <TextInput 
+          secureTextEntry={true}
           style={{height: 40}}
           placeholder="Password"
           onChangeText={password => setPassword(password)}
