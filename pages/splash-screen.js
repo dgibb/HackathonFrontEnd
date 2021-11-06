@@ -6,6 +6,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function SplashScreen({ navigation }) {
+  const token = localStorage.getItem('token');
+  if(token) {
+    navigation.navigate('Home')
+  }
+
   return (
     <View style={styles.body}>
 

@@ -1,63 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect} from 'react'
-import { StyleSheet, Text, View, SafeAreaView, FlatList, } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Item = ({ name, interest, imgurl}) => (
+  <View style={styles.match}>
+    <Text style={styles.title}>{name}</Text>
+      <View style={styles.flexrow}>
+        <Image style={styles.image} source={{uri: {imgurl} }}/>
+        <Text style={styles.title}>{interest}</Text>
+      </View>
+  </View>
+);
 
 function HomeScreen({ navigation }) {
   const [matchData, setMatchdata] =  useState({ data: {} });
   const [matchList, setMatchlist] =  useState({ data: {} });
-  const [matchCards, setMatchcards] = useState([]);
 
-  const token = window.localStorage.getItem('token')
-
-  // useEffect(() => {
-  //   fetch(`http://137.184.103.104:8000/statboard?token_user=${token}`
-  //   )
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log('Success:', data);
-  //     setMatchdata(data)
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error:', error);
-  //   });
-  // });
+  const token = window.localStorage.getItem('token');
 
   useEffect(() => {
-      fetch(`http://137.184.103.104:8000/matches/recommendations?token_user=${token}`
+    fetch(`http://137.184.103.104:8000/statboard?token_user=${token}`
+    )
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      setMatchdata(data)
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }, [token]);
+
+  useEffect(() => {
+      fetch(`http://137.184.103.104:8000/matches/recommendations/cards?token_user=${token}`
       )
       .then(response => response.json())
       .then(data => {
           console.log('Success:', data);
           setMatchlist(data);
-          for (let i = 0; i < 4; i++){
-              console.log(i);
-              fetch(`http://137.184.103.104:8000/matches/card?token_user=${token}&uid=${matchList[i]}`
-              )
-              .then(response => response.json())
-              .then(data => {
-                  console.log('Success:', data);
-                  setMatchcards(matchCards.push(data))
-              })
-              .catch((error) => {
-                  console.error('Error:', error);
-              });
-          }
-
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-  });
+  }, [token]);
 
 const renderItem = ({ item }) => (
-  <Item title={item.title} />
+  <Item name={item.full_name} interest={item.major_match_interest} />
 );
-
-
-console.log(matchData, matchList, matchCards)
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -67,17 +59,17 @@ console.log(matchData, matchList, matchCards)
         </Text>
         <View>
           <Text>
-            Active Matches
+            Active Matches {matchData.number_active_matches}
           </Text>
         </View>
         <View>
           <Text>
-            Outgoing Matches
+            Outgoing Matches {matchData.number_incoming_matches}
           </Text>
         </View>
         <View>
           <Text>
-            Incoming Matches
+            Incoming Matches {matchData.number_active_matches}
           </Text>
         </View>
       </View>
@@ -91,9 +83,9 @@ console.log(matchData, matchList, matchCards)
       <View>
       <SafeAreaView style={styles.container}>
          <FlatList
-           data={matchCards}
+           data={matchList}
            renderItem={renderItem}
-           keyExtractor={item => item.id}
+           keyExtractor={item => item.uid}
          />
        </SafeAreaView>
       </View>
@@ -108,6 +100,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  image: {
+    height:10,
+    width: 10,
+  },
+  flexrow: {
+    flexDirection: 'row',
+  }
 });
 
 export default HomeScreen
