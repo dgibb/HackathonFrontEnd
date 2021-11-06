@@ -44,7 +44,7 @@ function register(email, password) {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    navigation.navigate('EditProfileScreen');
+    navigation.navigate('EditProfile');
   })
   .catch((error) => {
     console.error('Error:', error);

@@ -40,10 +40,11 @@ function EditProfileScreen() {
   const [profile, setProfile] = useState({ data: {} });
 
     //get token from loacalstorage
+    const token = JSON.parse(localStorage.getItem("token:"));
 
     useEffect(() => {
       fetch('http://137.184.103.104:8000/profile/details', {
-        body: `token=${token}`,
+        body: `token_user=${token}`,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
