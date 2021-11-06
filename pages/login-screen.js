@@ -17,14 +17,14 @@ function LoginScreen({ navigation }) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Success:', data);
+      console.log(data);
       if(data.token !== ""){
         window.localStorage.setItem('token', data.token.toString());
+        navigation.navigate('Home')
       }
       else{
-        console.log("token is empty")
+        console.log("login failure")
       }
-      navigation.navigate('Home')
     })
     .catch((error) => {
       console.error('Error:', error);
