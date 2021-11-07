@@ -10,6 +10,7 @@ import ProfileScreen from './pages/profile-screen.js'
 import EditProfileScreen from './pages/edit-profile-screen.js'
 import RegisterScreen from './pages/register-screen.js'
 import SplashScreen from './pages/splash-screen.js'
+import CategoryScreen from './pages/category-screen.js'
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        <Stack.Screen name="Category" component={CategoryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
