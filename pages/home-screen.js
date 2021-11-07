@@ -70,12 +70,12 @@ const renderItem = ({ item }) => (
         </View>
         <View>
           <Text style={styles.stat}>
-            Outgoing Matches {matchData.number_incoming_matches}
+            Outgoing Matches {matchData.number_outgoing_matches}
           </Text>
         </View>
         <View>
           <Text style={styles.stat}>
-            Incoming Matches {matchData.number_active_matches}
+            Incoming Matches {matchData.number_incoming_matches}
           </Text>
         </View>
       </View>

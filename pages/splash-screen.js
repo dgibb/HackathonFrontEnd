@@ -8,6 +8,9 @@ import { useState, useEffect} from 'react'
 
 function SplashScreen({ navigation }) {
   const token = localStorage.getItem('token');
+  if(token) {
+    navigation.navigate('Profile')
+  }
 
   useEffect(()=> {
     fetch(`http://137.184.103.104:8000/auth/account/verify?token_user=${token}`)

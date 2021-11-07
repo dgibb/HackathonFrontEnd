@@ -34,7 +34,7 @@ const DATA = [
 ];
 
 const Item = ({ title }) => (
-  <View style={styles.item}>
+  <View style={styles.interest}>
     <Text style={styles.title}>{title}</Text>
   </View>
 );
@@ -42,52 +42,80 @@ const Item = ({ title }) => (
 function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ data: {} });
 
-    //get token from loacalstorage
-    const token = window.localStorage.getItem("token");
-    console.log(token);
+   const uid = 3;
+   const token = window.localStorage.getItem('token')
+
+   const sendFriendRequest = function(){
+     console.log(token, uid)
+     fetch(`http://137.184.103.104:8000/matches/request/send`,
+       {
+         body: `token_user=${token}&uid=${uid}`,
+         headers: {
+           "Content-Type": "application/x-www-form-urlencoded"
+         },
+         method: "POST",
+       }
+     )
+     .then(response => response.json())
+     .then(data => {
+       console.log('Success:', data);
+     })
+     .catch((error) => {
+       console.error('Error:', error);
+     });
+   }
 
     useEffect(() => {
-      fetch(`http://137.184.103.104:8000/auth/profile/details?token_user=${token}`
+      fetch(`http://137.184.103.104:8000/profile/details?uid=${uid}`
       )
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
+        data.categories_selected = data.categories_selected.replace(/[\"\\\[\]]/g, "").split(", ")
+        console.log(data.categories_selected);
         setProfile(data)
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-    });
+    }, [uid]);
 
   const renderItem = ({ item }) => (
-    <Item title={item.title} />
+    <Item title={item} />
   );
 
   return (
-    <View>
+    <View style={styles.bg}>
       <LinearGradient colors={['#FFAFBD', '#ffc3a0']} style={styles.gradient}>
-      <Image
-        style={styles.tinyLogo}
-        source={{
-          uri: 'https://reactnative.dev/img/tiny_logo.png',
-        }}
-      />
+      <View>
+        <Image style={styles.image} source={require('../assets/default_avatar.png')}/>
+      </View>
 
-   <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.item}
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={2}
-      />
-    </SafeAreaView>
+      <View >
+        <Text style={styles.name}>{profile.first_name} {profile.last_name}</Text>
+      </View>
 
-    <TouchableOpacity
-      onPress={() => navigation.navigate('EditProfile')}
-      style={styles.button}>
-      <Text style={styles.buttontext}>Edit Profile</Text>
-    </TouchableOpacity>
+      <View style={styles.interests}>
+        <SafeAreaView style={styles.container}>
+         <FlatList
+           style={styles.item}
+           data={profile.categories_selected}
+           renderItem={renderItem}
+           keyExtractor={(item, index) => index}
+           numColumns={2}
+         />
+        </SafeAreaView>
+      </View>
+
+      <View>
+        <TouchableOpacity
+          onPress={() => sendFriendRequest()}
+          style={styles.button}>
+          <Text style={styles.buttontext}>
+            Send Friend Request
+          </Text>
+        </TouchableOpacity>
+      </View>
     </LinearGradient>
     </View>
   );
@@ -95,17 +123,8 @@ function ProfileScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  item: {
-    flex: 1,
-    textAlign: "center",
-    marginLeft: 50,
-    marginRight: 50,
-    width: 50,
+    margin: '20px',
   },
   button: {
     textAlign: 'center',
@@ -115,15 +134,70 @@ const styles = StyleSheet.create({
     margin: 'auto',
     marginBottom: 10,
     fontSize: 15,
-    width: '50%',
     borderRadius: 8,
   },
   buttontext: {
     color: 'white',
     fontSize: 20,
+<<<<<<<
   },
   gradient: {
     flex: 1,
+=======
+  },
+  image: {
+    borderRadius: '50%',
+    height:'50vw',
+    width: '50vw',
+    margin: 'auto',
+    marginTop: '20px',
+    marginBottom: '20px',
+  },
+  bg : {
+    backgroundColor: 'peachpuff',
+    flex: 1,
+    flexDirection: "column",
+    alignItems: 'center',
+    justifyContent: 'space-evenly'
+  },
+
+  name : {
+    backgroundColor: 'white',
+    width: '50vw',
+    height: 40,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 25,
+    paddingTop: 5,
+    paddingLeft: 5,
+    borderRadius: 8
+  },
+
+  interests: {
+    backgroundColor: 'white',
+    width: '80vw',
+    padding:5,
+    borderRadius: 8,
+  },
+
+  interest: {
+    color: 'white',
+    backgroundColor: '#ffb88c',
+    padding: '5px',
+    fontSize: 15,
+    borderRadius: 5,
+    width: "45%",
+    marginRight: "5%",
+    marginBottom: 5,
+    textAlign: 'center',
+    justifyContent: 'center'
+
+  },
+  title: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+>>>>>>>
   }
 });
 
