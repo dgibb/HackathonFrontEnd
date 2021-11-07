@@ -42,13 +42,15 @@ function EditProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ data: {} });
 
   const Item = ({ title }) => (
-    <View 
-    style={styles.interest}
-    onPress = {title === "+" ? () => {navigation.navigate('Categories')} : () => {}}
-    >
-    <Text style={styles.title}>{title}</Text>
-  </View>
-   
+    <TouchableOpacity
+      style={styles.interest}
+      onPress = {title === "+" ? () => {navigation.navigate('Category');console.log('hi');} : () => {}}
+      >
+      <Text style={styles.title}>{title}</Text>
+    </TouchableOpacity>
+
+
+
   );
 
     //get token from loacalstorage
@@ -61,7 +63,7 @@ function EditProfileScreen({ navigation }) {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
-        
+
         data.categories_selected = data.categories_selected.replace(/[\"\\\[\]]/g, "")
         data.categories_selected = data.categories_selected.split(", ")
         data.categories_selected.push("+")
@@ -78,7 +80,7 @@ function EditProfileScreen({ navigation }) {
 
   return (
     <View style={styles.bg}>
-      
+
     <View style={styles.imgContainer}>
       <Image
         style={styles.image}
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   //   height: '50vw',
   //   borderRadius: 10,
   //   marginTop: 250,
-  //   marginBottom: 50 
+  //   marginBottom: 50
   // },
 
   bg : {
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
 
   // imgContainer: {
   //   marginTop: 20,
-  //   marginBottom: 20, 
+  //   marginBottom: 20,
   // },
 
   interests: {
