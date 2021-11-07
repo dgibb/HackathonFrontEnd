@@ -1,7 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -15,7 +15,11 @@ function SplashScreen({ navigation }) {
     <View style={styles.body}>
 
       <View style={styles.upper}>
-        <Text style={styles.appname}>App Name</Text>
+        <Text style={styles.appname}>Coterie</Text>
+        <Image
+          style={styles.tinyLogo}
+          source={require('../assets/graph.png')}
+        />
       </View>
 
       <View style={styles.lower}>
@@ -56,12 +60,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'peachpuff',
   },
   appname: {
+    marginTop: 50,
     color: 'white',
     fontSize: 50,
     margin: 'auto',
   },
   lower: {
-    flex: 2,
+    flex: 4,
     backgroundColor: 'peachpuff',
   },
   button: {
@@ -78,6 +83,13 @@ const styles = StyleSheet.create({
   buttontext: {
     color: 'white',
     fontSize: 20,
+  },
+  tinyLogo: {
+    position: 'fixed',
+    width: '100%',
+    height: 300,
+    top: '50%',
+    transform: 'translateY(-50%)',
   }
 });
 
