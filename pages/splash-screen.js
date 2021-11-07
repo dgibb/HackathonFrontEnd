@@ -4,12 +4,27 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState, useEffect} from 'react'
 
 function SplashScreen({ navigation }) {
   const token = localStorage.getItem('token');
-  if(token) {
-    navigation.navigate('Register')
-  }
+
+  useEffect(()=> {
+    fetch(`http://137.184.103.104:8000/auth/account/verify?token_user=${token}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if(data.logged_in !== false){
+        navigation.navigate('Home')
+      }
+      else{
+        console.log("verify failure")
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }, ['']);
 
   return (
     <View style={styles.container}>

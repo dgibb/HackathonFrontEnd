@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, TouchableOpacity} from 'react-native';
@@ -64,6 +65,7 @@ function ProfileScreen({ navigation }) {
 
   return (
     <View>
+      <LinearGradient colors={['#FFAFBD', '#ffc3a0']} style={styles.gradient}>
       <Image
         style={styles.tinyLogo}
         source={{
@@ -86,7 +88,7 @@ function ProfileScreen({ navigation }) {
       style={styles.button}>
       <Text style={styles.buttontext}>Edit Profile</Text>
     </TouchableOpacity>
-
+    </LinearGradient>
     </View>
   );
 }
@@ -119,6 +121,9 @@ const styles = StyleSheet.create({
   buttontext: {
     color: 'white',
     fontSize: 20,
+  },
+  gradient: {
+    flex: 1,
   }
 });
 

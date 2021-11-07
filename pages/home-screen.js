@@ -4,6 +4,7 @@ import { useState, useEffect} from 'react'
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, ScrollView, TouchableOpacity} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LinearGradient } from 'expo-linear-gradient';
 
 function HomeScreen({ navigation }) {
   const Item = ({ name, interest, imgurl}) => (
@@ -54,7 +55,8 @@ const renderItem = ({ item }) => (
 );
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'peachpuff' }}>
+    <View style={{ flex: 1 }}>
+      <LinearGradient colors={['#FFAFBD', '#ffc3a0']} style={styles.gradient}>
 
     <View style={styles.section}>
       <View style={styles.container}>
@@ -86,21 +88,30 @@ const renderItem = ({ item }) => (
           </Text>
         </View>
 
-        <SafeAreaView>
+        <SafeAreaView style={styles.viewStyle}>
+            
              <FlatList
                style={styles.flexrow}
                data={matchList}
                renderItem={renderItem}
                keyExtractor={item => item.uid}
                numColumns={4}
+               showsHorizontalScrollIndicator={false}
              />
         </SafeAreaView>
       </View>
+      </LinearGradient>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  viewStyle: {
+    padding: 10,
+    margin: "auto",
+    borderRadius: 7,
+    width: '80%',
+  },
   container: {
     backgroundColor: '#fff',
     padding: 10,
@@ -145,6 +156,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   section: {
+    flex: 1,
+  },
+  gradient: {
     flex: 1,
   }
 });

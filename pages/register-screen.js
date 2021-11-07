@@ -36,6 +36,7 @@ function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState('');
   return (
     <View style={styles.bg}>
+      <LinearGradient colors={['#FFAFBD', '#ffc3a0']} style={styles.gradient}>
       <View style={styles.body}>
         <TextInput
           style={styles.input}
@@ -58,6 +59,7 @@ function RegisterScreen({ navigation }) {
           <Text style={styles.button}>Register</Text>
         </TouchableOpacity>
       </View>
+      </LinearGradient>
     </View>
   );
 }
@@ -67,7 +69,6 @@ const styles = StyleSheet.create({
   bg: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: 'peachpuff'
   },
 
   body: {
@@ -97,6 +98,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#ffa07a',
     padding: 10
+  },
+  gradient: {
+    flex: 1,
   }
 });
 

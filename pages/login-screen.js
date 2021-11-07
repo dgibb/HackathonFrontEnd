@@ -36,6 +36,8 @@ function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   return (
     <View style={styles.bg}>
+      <LinearGradient colors={['#FFAFBD', '#ffc3a0']} style={styles.gradient}>
+
       <View style={styles.bg}>
         <TextInput
           style={styles.input}
@@ -58,6 +60,7 @@ function LoginScreen({ navigation }) {
           <Text style={styles.button}>Login</Text>
         </TouchableOpacity>
       </View>
+      </LinearGradient>
     </View>
   );
 }
@@ -67,7 +70,6 @@ const styles = StyleSheet.create({
   bg: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: 'peachpuff'
   },
 
   body: {
@@ -96,6 +98,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#ffa07a',
     padding: 10
+  },
+  gradient: {
+    flex: 1,
   }
 });
 
