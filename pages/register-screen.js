@@ -35,49 +35,69 @@ function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
-    <View style={styles.body}>
-      <TextInput
-        style={{height: 40}}
-        placeholder="Email"
-        onChangeText={email => setEmail(email)}
-        defaultValue={email}
-      />
-
-      <TextInput
-          style={{height: 40}}
-          placeholder="Password"
-          onChangeText={password => setPassword(password)}
-          defaultValue={password}
+    <View style={styles.bg}>
+      <View style={styles.body}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={email => setEmail(email)}
+          defaultValue={email}
         />
 
-      <TouchableOpacity
-        onPress={() => register(email, password)}
-        style={{ backgroundColor: 'blue' }}>
-        <Text style={styles.button}>Register</Text>
-      </TouchableOpacity>
+        <TextInput
+            secureTextEntry={true}
+            style={styles.input}
+            placeholder="Password"
+            onChangeText={password => setPassword(password)}
+            defaultValue={password}
+          />
+
+        <TouchableOpacity
+          onPress={() => register(email, password)}
+          style={styles.button}>
+          <Text style={styles.button}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  body: {
-    flexDirection: "column",
-  },
-  upper: {
+  
+  bg: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    flexDirection: "column",
+    backgroundColor: 'peachpuff'
   },
-  lower: {
-    flex: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+
+  body: {
+    flex: 1,
+    alignItems: 'center'
   },
+
   button: {
-    backgroundColor: 'EC6F66',
-    padding: 5,
-    margin: 5,
-    fontSize: 10,
-    width: "50%",
+    color: 'white',
+    backgroundColor: '#EC6F66',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingTop: 3,
+    margin: 'auto',
+    marginBottom: 10,
+    fontSize: 15,
+    width: '50%',
+    borderRadius: 8,
   },
+
+  input: {
+    height: 40,
+    width: '80%',
+    backgroundColor: '#fff5ef',
+    margin: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#ffa07a',
+    padding: 10
+  }
 });
 
 export default RegisterScreen;

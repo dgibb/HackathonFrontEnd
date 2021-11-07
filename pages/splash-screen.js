@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function SplashScreen({ navigation }) {
   const token = localStorage.getItem('token');
   if(token) {
-    navigation.navigate('Login')
+    navigation.navigate('Register')
   }
 
   return (
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   tinyLogo: {
     position: 'fixed',
     width: '100%',
-    height: 300,
+    height: '100vw',
     top: '50%',
     transform: 'translateY(-50%)',
   }
