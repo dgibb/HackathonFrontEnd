@@ -12,8 +12,8 @@ function SplashScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.body}>
-
+    <View style={styles.container}>
+      <LinearGradient colors={['#FFAFBD', '#ffc3a0']} style={styles.gradient}>
       <View style={styles.upper}>
         <Text style={styles.appname}>Coterie</Text>
         <Image
@@ -45,19 +45,24 @@ function SplashScreen({ navigation }) {
         </TouchableOpacity>
 
       </View>
+      </LinearGradient>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  gradient: {
+    flex: 1,
+  },
   body: {
     flexDirection: "column",
     flex:1,
-    backgroundColor: 'peachpuff',
   },
   upper: {
     flex: 10,
-    backgroundColor: 'peachpuff',
   },
   appname: {
     marginTop: 50,
@@ -67,7 +72,6 @@ const styles = StyleSheet.create({
   },
   lower: {
     flex: 4,
-    backgroundColor: 'peachpuff',
   },
   button: {
     textAlign: 'center',
@@ -88,6 +92,7 @@ const styles = StyleSheet.create({
     position: 'fixed',
     width: '100%',
     height: '100vw',
+    alignContent:'center',
     top: '50%',
     transform: 'translateY(-50%)',
   }
