@@ -1,21 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect} from 'react'
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, ScrollView, TouchableOpacity} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Item = ({ name, interest, imgurl}) => (
-  <View style={styles.container}>
-    <Text style={styles.titletext}>{name}</Text>
-      <View style={styles.flexrow}>
-        <Image style={styles.image} source={{uri: {imgurl} }}/>
-        <Text style={styles.title}>{interest}</Text>
-      </View>
-  </View>
-);
-
 function HomeScreen({ navigation }) {
+  const Item = ({ name, interest, imgurl}) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Profile')}
+      style={styles.container, styles.card}>
+      <Text style={styles.titletext}>{name}</Text>
+        <View style={styles.flexrow}>
+          <Image style={styles.image} source={require('../assets/default_avatar.png')}/>
+          <Text style={styles.title}>{interest}</Text>
+        </View>
+    </TouchableOpacity>
+  );
+
   const [matchData, setMatchdata] =  useState({ data: {} });
   const [matchList, setMatchlist] =  useState({ data: {} });
 
@@ -53,6 +55,8 @@ const renderItem = ({ item }) => (
 
   return (
     <View style={{ flex: 1, backgroundColor: 'peachpuff' }}>
+
+    <View style={styles.section}>
       <View style={styles.container}>
         <Text style={styles.titletext}>
           Activity
@@ -73,18 +77,16 @@ const renderItem = ({ item }) => (
           </Text>
         </View>
       </View>
+    </View>
 
-      <View style={styles.container}>
-        <Text style={styles.titletext}>
-          Matches
-        </Text>
-      </View>
+      <View style={styles.section}>
+        <View style={styles.container}>
+          <Text style={styles.titletext}>
+            Matches
+          </Text>
+        </View>
 
-      <View style={styles.flexrow}>
-        <SafeAreaView  style={styles.flexrow}>
-          <ScrollView
-            horizontal={true}
-          >
+        <SafeAreaView>
              <FlatList
                style={styles.flexrow}
                data={matchList}
@@ -92,7 +94,6 @@ const renderItem = ({ item }) => (
                keyExtractor={item => item.uid}
                numColumns={4}
              />
-           </ScrollView>
         </SafeAreaView>
       </View>
     </View>
@@ -121,15 +122,30 @@ const styles = StyleSheet.create({
     padding: 5,
     marginTop: 20,
     fontSize: 20,
-    borderRadius: 7,
+    borderRadius: 5,
 
   },
   image: {
-    height:10,
-    width: 10,
+    height: 110,
+    width: 110,
+    backgroundColor: 'aliceblue',
+    marginRight: 10,
   },
   flexrow: {
+    overflowX: 'scroll',
     flexDirection: 'row',
+  },
+  card: {
+    padding: 10,
+    backgroundColor: 'white',
+    width: '30%',
+    borderRadius: 10,
+    marginRight: 20,
+    borderColor: '#EC6F66',
+    borderWidth: 2,
+  },
+  section: {
+    flex: 1,
   }
 });
 
