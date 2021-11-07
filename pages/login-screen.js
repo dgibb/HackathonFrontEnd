@@ -34,75 +34,68 @@ function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
-    <View style={styles.body}>
-      <TextInput
-        style={{height: 40}}
-        placeholder="Email"
-        onChangeText={email => setEmail(email)}
-        defaultValue={email}
-      />
-
-      <TextInput
-          style={{height: 40}}
-          placeholder="Password"
-          onChangeText={password => setPassword(password)}
-          defaultValue={password}
+    <View style={styles.bg}>
+      <View style={styles.bg}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={email => setEmail(email)}
+          defaultValue={email}
         />
 
-      <TouchableOpacity
-        onPress={() => login(email, password)}
-        style={{ backgroundColor: 'blue' }}>
-        <Text style={styles.button}>Login</Text>
-      </TouchableOpacity>
+        <TextInput
+            secureTextEntry={true}
+            style={styles.input}
+            placeholder="Password"
+            onChangeText={password => setPassword(password)}
+            defaultValue={password}
+          />
+
+        <TouchableOpacity
+          onPress={() => login(email, password)}
+          style={styles.button}>
+          <Text style={styles.button}>Login</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
-function login(email, password) {
-
-  fetch('http://137.184.103.104:8000/auth/account/login', {
-    body: `email_address=${email}&password=${password}`,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    method: "POST"
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    if(data.token !== ""){
-      window.localStorage.setItem('token', data.token.toString());
-      navigation.navigate('Home');
-    }
-    else{
-      console.log("token is empty")
-    }
-
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-}
 
 const styles = StyleSheet.create({
-  body: {
-    flexDirection: "column",
-  },
-  upper: {
+  bg: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    flexDirection: "column",
+    backgroundColor: 'peachpuff'
   },
-  lower: {
-    flex: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+
+  body: {
+    flex: 1,
+    alignItems: 'center'
   },
+
   button: {
-    backgroundColor: 'EC6F66',
-    padding: 5,
-    margin: 5,
-    fontSize: 10,
-    width: "50%",
+    color: 'white',
+    backgroundColor: '#EC6F66',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingTop: 3,
+    margin: 'auto',
+    marginBottom: 10,
+    fontSize: 15,
+    width: '30%',
+    borderRadius: 8,
   },
+
+  input: {
+    height: 40,
+    backgroundColor: '#fff5ef',
+    margin: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#ffa07a',
+    padding: 10
+  }
 });
 
 export default LoginScreen;

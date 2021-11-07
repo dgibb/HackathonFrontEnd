@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function SplashScreen({ navigation }) {
   const token = localStorage.getItem('token');
   if(token) {
-    navigation.navigate('Home')
+    navigation.navigate('Login')
   }
 
   return (
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   body: {
     flexDirection: "column",
     flex:1,
+    backgroundColor: 'peachpuff',
   },
   upper: {
     flex: 10,
