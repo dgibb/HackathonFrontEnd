@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect} from 'react'
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, ScrollView} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Item = ({ name, interest, imgurl}) => (
-  <View style={styles.match}>
-    <Text style={styles.title}>{name}</Text>
+  <View style={styles.container}>
+    <Text style={styles.titletext}>{name}</Text>
       <View style={styles.flexrow}>
         <Image style={styles.image} source={{uri: {imgurl} }}/>
         <Text style={styles.title}>{interest}</Text>
@@ -52,42 +52,48 @@ const renderItem = ({ item }) => (
 );
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <View>
-        <Text>
+    <View style={{ flex: 1, backgroundColor: 'peachpuff' }}>
+      <View style={styles.container}>
+        <Text style={styles.titletext}>
           Activity
         </Text>
         <View>
-          <Text>
+          <Text style={styles.stat}>
             Active Matches {matchData.number_active_matches}
           </Text>
         </View>
         <View>
-          <Text>
+          <Text style={styles.stat}>
             Outgoing Matches {matchData.number_incoming_matches}
           </Text>
         </View>
         <View>
-          <Text>
+          <Text style={styles.stat}>
             Incoming Matches {matchData.number_active_matches}
           </Text>
         </View>
       </View>
 
-      <View>
-        <Text>
+      <View style={styles.container}>
+        <Text style={styles.titletext}>
           Matches
         </Text>
       </View>
 
-      <View>
-      <SafeAreaView style={styles.container}>
-         <FlatList
-           data={matchList}
-           renderItem={renderItem}
-           keyExtractor={item => item.uid}
-         />
-       </SafeAreaView>
+      <View style={styles.flexrow}>
+        <SafeAreaView  style={styles.flexrow}>
+          <ScrollView
+            horizontal={true}
+          >
+             <FlatList
+               style={styles.flexrow}
+               data={matchList}
+               renderItem={renderItem}
+               keyExtractor={item => item.uid}
+               numColumns={4}
+             />
+           </ScrollView>
+        </SafeAreaView>
       </View>
     </View>
   );
@@ -95,10 +101,28 @@ const renderItem = ({ item }) => (
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 10,
+    margin: "auto",
+    borderRadius: 7,
+    width: '80%',
+  },
+  titletext: {
+    color: '#EC6F66',
+    fontSize: 20,
+    borderBottomWidth: 2,
+    borderBottomColor: "#DDD",
+    padding: 5,
+    marginBottom: 10,
+  },
+  stat: {
+    color: 'white',
+    backgroundColor: '#EC6F66',
+    padding: 5,
+    marginTop: 20,
+    fontSize: 20,
+    borderRadius: 7,
+
   },
   image: {
     height:10,
