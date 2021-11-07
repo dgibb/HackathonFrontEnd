@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function LoginScreen({ navigation }) {
+
   const login = function(email, password) {
     fetch('http://137.184.103.104:8000/auth/account/login', {
       body: `email_address=${email}&password=${password}`,

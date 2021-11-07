@@ -7,6 +7,31 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function RegisterScreen({ navigation }) {
+
+  const register = function(email, password) {
+    fetch('http://137.184.103.104:8000/auth/account/create', {
+      body: `email_address=${email}&password=${password}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST"
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      if(data.token !== ""){
+        window.localStorage.setItem('token', data.token.toString());
+        navigation.navigate('EditProfile');
+      }
+      else{
+        console.log("token is empty")
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
@@ -32,31 +57,6 @@ function RegisterScreen({ navigation }) {
       </TouchableOpacity>
     </View>
   );
-}
-
-function register(email, password) {
-
-  fetch('http://137.184.103.104:8000/auth/account/create', {
-    body: `email_address=${email}&password=${password}`,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    method: "POST"
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    if(data.token !== ""){
-      window.localStorage.setItem('token', data.token.toString());
-      navigation.navigate('EditProfile');
-    }
-    else{
-      console.log("token is empty")
-    }
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
 }
 
 const styles = StyleSheet.create({
