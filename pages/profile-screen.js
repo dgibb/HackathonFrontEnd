@@ -139,11 +139,11 @@ const styles = StyleSheet.create({
   buttontext: {
     color: 'white',
     fontSize: 20,
-<<<<<<<
   },
   gradient: {
     flex: 1,
-=======
+    width: '100vw',
+    justifyContent: 'space-evenly',
   },
   image: {
     borderRadius: '50%',
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: 'center',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-around'
   },
 
   name : {
@@ -170,7 +170,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingTop: 5,
     paddingLeft: 5,
-    borderRadius: 8
+    borderRadius: 8,
+    margin: 'auto',
+
   },
 
   interests: {
@@ -178,6 +180,9 @@ const styles = StyleSheet.create({
     width: '80vw',
     padding:5,
     borderRadius: 8,
+    margin: 'auto',
+    marginTop: 0,
+    marginBottom: 0,
   },
 
   interest: {
@@ -197,7 +202,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     fontWeight: "bold",
->>>>>>>
   }
 });
 
