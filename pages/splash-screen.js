@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function SplashScreen({ navigation }) {
   const token = localStorage.getItem('token');
   if(token) {
-    navigation.navigate('Register')
+    navigation.navigate('EditProfile')
   }
 
   return (

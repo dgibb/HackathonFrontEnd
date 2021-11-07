@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Image, Button, Touchable, TouchableOpacity} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -33,7 +33,7 @@ const DATA = [
 ];
 
 const Item = ({ title }) => (
-  <View style={styles.item}>
+  <View style={styles.interest}>
     <Text style={styles.title}>{title}</Text>
   </View>
 );
@@ -41,56 +41,70 @@ const Item = ({ title }) => (
 function EditProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ data: {} });
 
+  const Item = ({ title }) => (
+    <View 
+    style={styles.interest}
+    onPress = {title === "+" ? () => {navigation.navigate('Categories')} : () => {}}
+    >
+    <Text style={styles.title}>{title}</Text>
+  </View>
+   
+  );
+
     //get token from loacalstorage
     const token = window.localStorage.getItem("token");
     console.log(token);
 
     useEffect(() => {
-      fetch(`http://137.184.103.104:8000/auth/profile/details?token_user=${token}`
+      fetch(`http://137.184.103.104:8000/profile/details?token_user=${token}`
       )
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
+        
+        data.categories_selected = data.categories_selected.replace(/[\"\\\[\]]/g, "")
+        data.categories_selected = data.categories_selected.split(", ")
+        data.categories_selected.push("+")
         setProfile(data)
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-    });
+    }, [token]);
 
   const renderItem = ({ item }) => (
-    <Item title={item.title} />
+    <Item title={item} />
   );
 
   return (
-    <View>
+    <View style={styles.bg}>
+      
+    <View style={styles.imgContainer}>
       <Image
-        style={styles.tinyLogo}
-        source={{
-          uri: 'https://reactnative.dev/img/tiny_logo.png',
-        }}
+        style={styles.image}
+        source={require('../assets/default_avatar.png')}
       />
-   <View>
-     <Text>
-       Name
+    </View>
+
+    <View>
+     <Text style={styles.name}>
+       {profile.first_name}  {profile.last_name}
      </Text>
    </View>
 
-   <View>
-     <Text>
-       Email
-     </Text>
-   </View>
+    <View style={styles.interests}>
+      <SafeAreaView style={styles.interestCont}>
+        <FlatList
+          style={styles.item}
+          data={profile.categories_selected}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index}
+          numColumns={2}
+        />
 
-   <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.item}
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={2}
-      />
-    </SafeAreaView>
+
+      </SafeAreaView>
+    </View>
 
     </View>
   );
@@ -99,19 +113,74 @@ function EditProfileScreen({ navigation }) {
 
 
 const styles = StyleSheet.create({
-  container: {
+  // interestCont: {
+  //   backgroundColor: 'white',
+  //   width: '50vw',
+  //   height: '50vw',
+  //   borderRadius: 10,
+  //   marginTop: 250,
+  //   marginBottom: 50 
+  // },
+
+  bg : {
+    backgroundColor: 'peachpuff',
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: "column",
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly'
   },
-  item: {
-    flex: 1,
-    textAlign: "center",
-    marginLeft: 50,
-    marginRight: 50,
-    width: 50,
+
+  image : {
+    height: '50vw',
+    width: '50vw',
+    backgroundColor: 'aliceblue',
+    borderRadius: '50%',
+    margin: 'auto'
+  },
+
+  name : {
+    backgroundColor: 'white',
+    width: '50vw',
+    height: 40,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 25,
+    paddingTop: 5,
+    paddingLeft: 5,
+    borderRadius: 10,
+  },
+
+  // imgContainer: {
+  //   marginTop: 20,
+  //   marginBottom: 20, 
+  // },
+
+  interests: {
+    backgroundColor: 'white',
+    width: '80vw',
+    padding:5,
+    borderRadius: 8,
+  },
+
+  interest: {
+    color: 'white',
+    backgroundColor: '#ffb88c',
+    padding: '5px',
+    fontSize: 15,
+    borderRadius: 5,
+    width: "45%",
+    marginRight: "5%",
+    marginBottom: 5,
+    textAlign: 'center',
+    justifyContent: 'center'
+
+  },
+  title: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
   }
+
 });
 
 export default EditProfileScreen;
