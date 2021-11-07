@@ -39,10 +39,13 @@ const Item = ({ title }) => (
   </View>
 );
 
-function ProfileScreen({ navigation }) {
+function ProfileScreen({ navigation, route }) {
   const [profile, setProfile] = useState({ data: {} });
 
-   const uid = 3;
+   let uid = route
+   if (route.params !== undefined) {
+     uid = route.params.uid
+   }
    const token = window.localStorage.getItem('token')
 
    const sendFriendRequest = function(){

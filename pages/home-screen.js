@@ -7,9 +7,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 
 function HomeScreen({ navigation }) {
-  const Item = ({ name, interest, imgurl}) => (
+  const Item = ({ name, interest, uid}) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Profile')}
+      onPress={() => navigation.navigate('Profile', {
+        uid: uid,
+      })}
       style={styles.container, styles.card}>
       <Text style={styles.titletext}>{name}</Text>
         <View style={styles.flexrow}>
@@ -51,7 +53,7 @@ function HomeScreen({ navigation }) {
   }, [token]);
 
 const renderItem = ({ item }) => (
-  <Item name={item.full_name} interest={item.major_match_interest} />
+  <Item name={item.full_name} interest={item.major_match_interest} uid={item.uid}/>
 );
 
   return (
@@ -89,7 +91,7 @@ const renderItem = ({ item }) => (
         </View>
 
         <SafeAreaView style={styles.viewStyle}>
-            
+
              <FlatList
                style={styles.flexrow}
                data={matchList}
